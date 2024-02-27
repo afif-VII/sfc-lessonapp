@@ -1,17 +1,5 @@
-<!-- <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script> -->
-
 <template>
   <div id="app">
-    <!-- <header>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div> 
-    </header> -->
 
     <header>
       <h1>{{ sitename }}</h1>
@@ -53,12 +41,10 @@ import TheWelcome from './components/TheWelcome.vue'
       </div>
     </header>
 
-    <!-- <main>
-      <TheWelcome />
-    </main> -->
-
     <main>
-      <component :is="currentView"></component>
+      <br>
+      <component :is="currentView" :sortedLessons="sortedLessons" 
+      :imagesBaseURL="imagesBaseURL"></component>
     </main>
   </div>
 </template>
@@ -67,6 +53,8 @@ import TheWelcome from './components/TheWelcome.vue'
 import LessonList from "./components/LessonList.vue";
 import Checkout from "./components/Checkout.vue";
 
+import lessons from "./assets/json/lessons.json"
+
 export default {
   name: "app",
   data() {
@@ -74,6 +62,10 @@ export default {
       sitename: "Lesson booking app",
       cart: [],
       currentView: LessonList,
+      lessons: lessons,
+      // lessons: [],
+      imagesBaseURL: "",
+      // imagesBaseURL: "https://lessonsapp-env.eba-3nvapgfm.eu-west-2.elasticbeanstalk.com/collections/lessons",
       testConsole: true,
       showTestConsole: true,
       // serverURL: "http://localhost:3000/collections/lessons",
@@ -148,7 +140,17 @@ export default {
   computed: {
     itemsInCart: function () {
       return this.cart.length || "";
-    }
+    },
+
+    sortedLessons() {
+          function compare(a, b) {
+            if (a.price > b.price) return 1;
+            if (a.price < b.price) return -1;
+            return 0;
+          }
+
+          return this.lessons.sort(compare);
+        },
   }
 }
 </script>
