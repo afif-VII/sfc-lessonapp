@@ -20,6 +20,37 @@ import TheWelcome from './components/TheWelcome.vue'
         <font-awesome-icon :icon="['fas', 'cart-shopping']" />
       Checkout
       </button>
+
+      <div>
+      <button v-if="testConsole" @click="toggleShowTestConsole">
+        <font-awesome-icon icon="fas fa-text-height" />
+      Test console
+      </button>
+
+      <div v-if="testConsole && showTestConsole" class="test-console">
+        <button @click="saveLessonToDB" class="test-elem">
+          <font-awesome-icon :icon="['fas', 'floppy-disk']" />
+          Test save lesson to DB
+        </button>
+
+        <button @click="deleteAllCaches" class="test-elem">
+          <font-awesome-icon :icon="['fas', 'trash']" />          
+          Delete all caches
+        </button>
+
+        <button @click="reloadPage" class="test-elem">
+          Reload page
+        </button>
+
+        <strong class="test-elem">HTTPS Test: </strong><a
+        v-bind:href="serverURL" target="_blank">link</a>
+        <button @click="unregisterAllServiceWorkers" class="test-elem">
+          <font-awesome-icon icon="fab fa-uniregistry" />
+          Unregister all service workers
+        </button>
+      </div>
+
+      </div>
     </header>
 
     <!-- <main>
@@ -43,6 +74,10 @@ export default {
       sitename: "Lesson booking app",
       cart: [],
       currentView: LessonList,
+      testConsole: true,
+      showTestConsole: true,
+      // serverURL: "http://localhost:3000/collections/lessons",
+      serverURL: "https://lessonsapp-env.eba-3nvapgfm.eu-west-2.elasticbeanstalk.com/collections/lessons",
     };
   },
   components: { LessonList, Checkout },
@@ -54,6 +89,59 @@ export default {
       } else {
         this.currentView = LessonList;
       }
+    },
+    toggleShowTestConsole() {
+      this.showTestConsole = !this.showTestConsole;
+    },
+
+    saveLessonToDB() {
+      const newLesson = {
+        "id": 1011,
+        "subject": "Maths2",
+        "location": "Room: 11",
+        "price": 15.99,
+        "image": "images/maths.png",
+        "inventory": 5,
+      };
+
+      fetch(this.serverURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newLesson)
+      }).then(
+        function (response) {
+          response.json().then(
+            function (json) {
+              alert("Success: " + json.acknowledged);
+              console.log("Success: " + json.acknowledged);
+
+              webstore.lessons.push(newLesson);
+            }
+          )
+        }
+      );
+    },
+
+    deleteAllCaches() {
+      caches.keys().then(function (names) {
+        for (let name of names) caches.delete(name);
+      });
+      console.log("All caches deleted");
+    },
+
+    reloadPage() {
+      window.location.reload();
+    },
+
+    unregisterAllServiceWorkers() {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister()
+        }
+      });
+      console.log("Service workers unregistered");
     },
   },
 
