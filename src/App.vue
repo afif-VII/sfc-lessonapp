@@ -3,10 +3,6 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 </script> -->
 
-<script setup>
-</script>
-
-
 <template>
   <div id="app">
     <!-- <header>
@@ -19,7 +15,11 @@ import TheWelcome from './components/TheWelcome.vue'
 
     <header>
       <h1>{{ sitename }}</h1>
-      <button @click="showCheckout">{{ this.cart.length }} Checkout </button>
+      <button v-on:click="showCheckout" v-bind:disabled="cart.length === 0">
+        {{ itemsInCart }}
+        <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+      Checkout
+      </button>
     </header>
 
     <!-- <main>
@@ -33,19 +33,20 @@ import TheWelcome from './components/TheWelcome.vue'
 </template>
 
 <script>
-import LessonList from './components/LessonList.vue'
-import Checkout from './components/Checkout.vue'
+import LessonList from "./components/LessonList.vue";
+import Checkout from "./components/Checkout.vue";
 
 export default {
   name: "app",
   data() {
     return {
       sitename: "Lesson booking app",
-      cart:[],
-      currentView: LessonList
-    }
+      cart: [],
+      currentView: LessonList,
+    };
   },
-  components: { LessonList, Checkout},
+  components: { LessonList, Checkout },
+  
   methods: {
     showCheckout() {
       if (this.currentView === LessonList) {
@@ -53,9 +54,14 @@ export default {
       } else {
         this.currentView = LessonList;
       }
+    },
+  },
+
+  computed: {
+    itemsInCart: function () {
+      return this.cart.length || "";
     }
   }
-
 }
 </script>
 
