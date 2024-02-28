@@ -23,40 +23,14 @@
           </strong>)
         </p>
 
-        <!-- <button v-on:click="manageRemoveItem(lesson)">
+        <button v-on:click="manageRemoveItem(lesson)">
           Remove 1 from your cart
-        </button> -->
+        </button>
       </div>
       </div>
     </div>
   </div>
 
-  <!-- <ul>
-      <li v-for="lesson in addedLessons" :key="lesson.id">
-        {{ lesson.subject }} - {{ lesson.location }} - £{{ lesson.price }}
-      </li>
-    </ul>
-
-    <p>
-      <strong>Name: </strong>
-      <input type="text" v-model.trim="order.name" v-on:input="validateName" />
-    </p>
-
-    <p>
-      <strong>Mobile number: </strong>
-      <input type="number" v-model.trim="order.number" />
-    </p>
-
-    <h2>Order information</h2>
-
-    <p><strong>Name: </strong> {{ order.name }}</p>
-
-    <p><strong>Mobile number: </strong> {{ order.number }}</p>
-
-    <button v-on:click="submitCheckoutForm" v-bind:disabled="isButtonDisabled">
-      Place order
-    </button> -->
-  <!-- </div> -->
 </template>
 
 <script>
@@ -84,6 +58,9 @@ export default {
     atLeastOneInTheCart(lesson) {
       return this.cart.includes(lesson.id);
     },
+    manageRemoveItem: function(lesson) {
+      this.$emit("manage-remove-item", lesson);
+    },
   },
   computed: {
     itemsInCart: function () {
@@ -92,3 +69,4 @@ export default {
   }
 }
 </script>
+

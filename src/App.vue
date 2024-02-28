@@ -39,8 +39,9 @@
 
     <main>
       <br/>
-      <component :is="currentView" :sortedLessons="sortedLessons" :imagesBaseURL="imagesBaseURL" :cart="cart" @add-item-to-cart="addToCart"
-      ></component>
+      <component :is="currentView" :sortedLessons="sortedLessons" 
+      :imagesBaseURL="imagesBaseURL" :cart="cart" @add-item-to-cart="addToCart"
+      @manage-remove-item="manageRemoveItem"></component>
     </main>
   </div>
 </template>
@@ -143,7 +144,21 @@ export default {
     addToCart: function (lesson) {
       this.cart.push(lesson.id);
     },
+
+    removeItemFromCart(lesson) {
+      let index = this.cart.indexOf(lesson.id);
+      this.cart.splice(index, 1);
+    },
+
+    manageRemoveItem(lesson) {
+      this.removeItemFromCart(lesson);
+      if (!this.atLeastOneItemInTheCart) {
+        this.currentView = LessonList;
+  }
+},
+
   },
+
 
   computed: {
     itemsInCart: function () {
@@ -158,6 +173,10 @@ export default {
       }
 
       return this.lessons.sort(compare);
+    },
+
+    atLeastOneItemInTheCart() {
+      return this.itemsInCart >=1;
     },
   },
 };
