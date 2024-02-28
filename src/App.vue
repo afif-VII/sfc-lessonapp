@@ -44,7 +44,7 @@
     <main>
       <br>
       <component :is="currentView" :sortedLessons="sortedLessons" 
-      :imagesBaseURL="imagesBaseURL"></component>
+      :imagesBaseURL="imagesBaseURL" :cart="cart"></component>
     </main>
   </div>
 </template>
@@ -53,7 +53,7 @@
 import LessonList from "./components/LessonList.vue";
 import Checkout from "./components/Checkout.vue";
 
-import lessons from "./assets/json/lessons.json"
+// import lessons from "./assets/json/lessons.json"
 
 export default {
   name: "app",
@@ -62,8 +62,8 @@ export default {
       sitename: "Lesson booking app",
       cart: [],
       currentView: LessonList,
-      lessons: lessons,
-      // lessons: [],
+      // lessons: lessons,
+      lessons: [],
       imagesBaseURL: "",
       // imagesBaseURL: "https://lessonsapp-env.eba-3nvapgfm.eu-west-2.elasticbeanstalk.com/collections/lessons",
       testConsole: true,
@@ -73,6 +73,24 @@ export default {
     };
   },
   components: { LessonList, Checkout },
+
+created: function() {
+  // if ("serviceWorker" in navigator) {
+  //   navigator.serviceWorker.register("service-worker.js");
+  // }
+
+  let webstore = this;
+  
+  fetch(this.serverURL).then(
+    function (response) {
+      response.json().then(
+        function (json) { 
+          webstore.lessons = json;
+        }
+      )
+    }
+  );
+},
   
   methods: {
     showCheckout() {
