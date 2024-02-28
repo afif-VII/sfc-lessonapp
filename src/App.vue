@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <h1>{{ sitename }}</h1>
-      <button v-on:click="showCheckout" v-bind:disabled="cart.length === 0">
+      <button v-on:click="showCheckout">
         {{ itemsInCart }}
         <font-awesome-icon :icon="['fas', 'cart-shopping']" />
         Checkout
@@ -66,16 +66,15 @@ export default {
       testConsole: true,
       showTestConsole: true,
       // serverURL: "http://localhost:3000/collections/lessons",
-      serverURL:
-        "https://lessonsapp-env.eba-3nvapgfm.eu-west-2.elasticbeanstalk.com/collections/lessons",
+      serverURL: "https://lessonsapp-env.eba-3nvapgfm.eu-west-2.elasticbeanstalk.com/collections/lessons",
     };
   },
   components: { LessonList, Checkout },
 
   created: function () {
-    // if ("serviceWorker" in navigator) {
-    //   navigator.serviceWorker.register("service-worker.js");
-    // }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
 
     let webstore = this;
 
@@ -97,13 +96,15 @@ export default {
 
     saveLessonToDB() {
       const newLesson = {
-        id: 1011,
-        subject: "Maths2",
-        location: "Room: 11",
-        price: 15.99,
-        image: "images/maths.png",
-        inventory: 5,
-      };
+        "id": 1011,
+        "subject": "Maths2",
+        "location": "Room: 11",
+        "price": 15.99,
+        "image": "images/maths.png",
+        "inventory": 5,
+      }
+
+      let webstore = this;
 
       fetch(this.serverURL, {
         method: "POST",
