@@ -44,7 +44,7 @@
     <main>
       <br>
       <component :is="currentView" :sortedLessons="sortedLessons" 
-      :imagesBaseURL="imagesBaseURL" :cart="cart"></component>
+      :imagesBaseURL="imagesBaseURL" :cart="cart" @add-item-to-cart="addToCart"></component>
     </main>
   </div>
 </template>
@@ -152,6 +152,10 @@ created: function() {
         }
       });
       console.log("Service workers unregistered");
+    },
+
+    addToCart: function (lesson) {
+      this.cart.push(lesson.id);
     },
   },
 

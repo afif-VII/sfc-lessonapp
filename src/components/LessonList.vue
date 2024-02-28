@@ -12,11 +12,10 @@
         <p>Price: £{{lesson.price}}</p>
 
         <button v-if="canAddToCart(lesson)" v-on:click="addToCart(lesson)">Add to cart</button>
-        
-        <!-- <button v-else disabled>Add to cart</button> -->
-        <!-- <span v-if="itemsLeft(lesson) == 0">All spaces booked!</span>
+        <button v-else disabled>Add to cart</button>
+        <span v-if="itemsLeft(lesson) == 0">All spaces booked!</span>
         <span v-else-if="itemsLeft(lesson) < 5">Only {{itemsLeft(lesson)}} spaces left!</span>
-        <span v-else>Book now!</span> -->
+        <span v-else>Book now!</span>
       </div>
   </div>
 
@@ -44,6 +43,14 @@ methods: {
           }
           return count;
         },
+
+addToCart: function (lesson) {
+  this.$emit("add-item-to-cart", lesson)
+  },
+itemsLeft(lesson) {
+  return lesson.inventory - this.cartCount(lesson.id);
+  },
+        
   }
 }
 </script>
