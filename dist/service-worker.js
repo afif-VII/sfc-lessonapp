@@ -1,6 +1,6 @@
 var cacheName = "lessonsapp-v1";
 var cacheFiles = [
-  "/",
+  "index.html",
   "/vite.config.js",
   "/src/App.vue",
   "/src/main.js",
