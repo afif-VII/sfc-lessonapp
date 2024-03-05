@@ -9,7 +9,6 @@ var cacheFiles = [
   "../src/assets/main.css",
   "../src/assets/base.css",
   "../src/assets/style.css",
-
   "images/icon-192.png",
   "images/icon-512.png",
   "images/art.png",
