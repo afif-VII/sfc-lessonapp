@@ -1,7 +1,15 @@
 var cacheName = "lessonsapp-v1";
 var cacheFiles = [
   "index.html",
-  // "lessons.js",
+  "vite.config.js",
+  "src/App.vue",
+  "src/components/Checkout.vue",
+  "src/components/LessonList.vue",
+  "src/main.js",
+  "src/assets/main.css",
+  "src/assets/base.css",
+  "src/assets/style.css",
+
   "images/icon-192.png",
   "images/icon-512.png",
   "images/art.png",
