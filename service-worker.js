@@ -3,8 +3,6 @@ var cacheFiles = [
   "/",
   "/vite.config.js",
   "/src/App.vue",
-  "/src/components/Checkout.vue",
-  "/src/components/LessonList.vue",
   "/src/main.js",
   "/src/assets/main.css",
   "/src/assets/base.css",
